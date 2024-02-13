@@ -11,6 +11,9 @@ Linguagem:
 Framework
 <ul>
     <li>Flask</li>
+    <li>Flask-SQLAlchemy</li>
+    <li>Flask-Login</li>
+    <li>Werkzeug</li>
 </ul>
 
 Banco de dados
