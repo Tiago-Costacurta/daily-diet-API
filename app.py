@@ -10,6 +10,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql:///root:admin123@127.0.0.
 # Configuração para Banco de Dados
 db = SQLAlchemy(app)
 
+
+
+
+
 # Criação de Rota Flask Exemplo
 @app.route("/hello-world", methods=["GET"])
 def hello_world():

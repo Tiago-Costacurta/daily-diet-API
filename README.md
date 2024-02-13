@@ -14,6 +14,8 @@ Framework
     <li>Flask-SQLAlchemy</li>
     <li>Flask-Login</li>
     <li>Werkzeug</li>
+    <li>pymysql</li>
+    <li>cryptography</li>
 </ul>
 
 Banco de dados
