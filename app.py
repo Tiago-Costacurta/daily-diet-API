@@ -17,6 +17,11 @@ db.init_app(app)
 login_manager.init_app(app)
 
 #view login
+login_manager.login_view = 'login'
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
 
 @app.route('/login', methods=["POST"])
 def login():
@@ -27,11 +32,10 @@ def login():
     # Validação se foi recebido usuário e senha
     if username and password:
         # Login OK
-        login_user(user)
-        print(current_user.is_authenticated)
         user = User.query.filter_by(username=username).first()
 
         if user and user.password == password:
+            login_user(user)
             return jsonify({"message": "Autenticação realizada com sucesso"})
         
     return jsonify({"message": "Credenciais Inválidas"}), 400
