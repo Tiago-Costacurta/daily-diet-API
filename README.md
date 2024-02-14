@@ -11,8 +11,19 @@ Linguagem:
 Framework
 <ul>
     <li>Flask</li>
+    <ul>
+        <li>Flask</li>
+        <li>request</li>
+        <li>jsonify</li>
+    </ul>
     <li>Flask-SQLAlchemy</li>
     <li>Flask-Login</li>
+    <ul>
+        <li>LoginManager</li>
+        <li>login_user</li>
+        <li>current_user</li>
+        <li>UserMixin</li>
+    </ul>
     <li>Werkzeug</li>
     <li>pymysql</li>
     <li>cryptography</li>

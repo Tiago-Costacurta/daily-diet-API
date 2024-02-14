@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from models.user import User
 from database import db
-from flask_login import LoginManager
+from flask_login import LoginManager, login_user, current_user
 
 # Configuração para iniciar FLask
 app = Flask(__name__)
@@ -27,6 +27,8 @@ def login():
     # Validação se foi recebido usuário e senha
     if username and password:
         # Login OK
+        login_user(user)
+        print(current_user.is_authenticated)
         user = User.query.filter_by(username=username).first()
 
         if user and user.password == password:
