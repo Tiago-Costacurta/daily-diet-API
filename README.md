@@ -23,6 +23,8 @@ Framework
         <li>login_user</li>
         <li>current_user</li>
         <li>UserMixin</li>
+        <li>logout_user</li>
+        <li>login_required</li>
     </ul>
     <li>Werkzeug</li>
     <li>pymysql</li>
