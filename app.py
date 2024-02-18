@@ -8,9 +8,11 @@ app = Flask(__name__)
 # Configuração de senha para Flask -> Banco de dados
 app.config['SECRET_KEY'] = "your_secret_key"
 # Endereço do Banco de Dados
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql:///root:admin123@127.0.0.1:3306/daily-diet'
+# SQLITE
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SECRET_KEY'] = "your_secret_key"
+# MYSQL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:admin123@127.0.0.1:3306/daily-diet'
 # Configuração para Banco de Dados
 login_manager = LoginManager()
 db.init_app(app)
