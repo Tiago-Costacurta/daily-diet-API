@@ -29,6 +29,7 @@ Framework
     <li>Werkzeug</li>
     <li>pymysql</li>
     <li>cryptography</li>
+    <li>bcrypt</li>
 </ul>
 
 Banco de dados
