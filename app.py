@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from models.user import User
+from models.diet import Diet
 from database import db
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 import bcrypt
