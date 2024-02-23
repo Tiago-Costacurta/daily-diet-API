@@ -6,4 +6,5 @@ class Diet(db.Model):
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(255), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=db.func.now())
-    snack = db.Column(db.Boolean, nullable=False, default=True)
+    diet = db.Column(db.Boolean, nullable=False, default=True)
+    userid = db.Column(db.Integer, nullable=False)

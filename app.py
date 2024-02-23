@@ -116,6 +116,25 @@ def delete_user(id_user):
 
     return jsonify({"message": "Usuário não encontrado"}), 404
 
+@app.route('/user/<int:id_user>/diet/create', methods=["POST"])
+@login_required
+def create_diet(id_user):
+    # name, description, date, snack, id_user
+    data = request.json
+    name = data.get("name")
+    description = data.get("description")
+    diet = data.get("diet")
+
+    if id_user == current_user.id or current_user.role == 'admin':
+        if name and description:
+            dietdb = Diet(name=name, description=description, diet=diet, userid=id_user)
+            db.session.add(dietdb)
+            db.session.commit()
+            return jsonify({"message": "Refeição cadastrada com sucesso"})
+    
+        return jsonify({"message": "Dados Incorretos"}), 400
+    return jsonify({"message": "Operação não permitida"})
+
 
 # Start Flask Server
 if __name__ == '__main__':
