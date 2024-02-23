@@ -1,9 +1,9 @@
 # daily-diet-API
 
-<b>Em construção / In construction</b>
-
 API desenvolvida para registros diarios de dieta com integração a banco de dados.
 Desafio Rocketseat.
+
+<b>Em construção / In construction</b>
 
 Linguagem:
 <ul>
