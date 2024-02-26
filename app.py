@@ -4,6 +4,11 @@ from models.diet import Diet
 from database import db
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 import bcrypt
+# from timezone import AdjustTimezone
+import zoneinfo
+import pytz
+from pytz import timezone, UnknownTimeZoneError
+from datetime import datetime
 
 # Configuração para iniciar FLask
 app = Flask(__name__)
@@ -21,6 +26,11 @@ login_manager.init_app(app)
 
 #view login
 login_manager.login_view = 'login'
+
+def AdjustTimezone(date):
+    sao_paulo_timezone = pytz.timezone('America/Sao_Paulo')
+
+    return date.astimezone(sao_paulo_timezone).strftime('%Y-%m-%d %H:%M:%S')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -135,7 +145,6 @@ def create_diet(id_user):
         return jsonify({"message": "Dados Incorretos"}), 400
     return jsonify({"message": "Operação não permitida"})
 
-
 @app.route('/user/<int:id_user>/diet/list', methods=["GET"])
 @login_required
 def list_diet(id_user):
@@ -149,11 +158,13 @@ def list_diet(id_user):
         diets_data = []
 
         for diet in list_diet:
+            adjust_date = AdjustTimezone(date=diet.date)
+
             diet_data = {
                 "id": diet.id,
                 "name": diet.name,
                 "description": diet.description,
-                "date": str(diet.date),
+                "date": adjust_date,
                 "diet": diet.diet
             }
             diets_data.append(diet_data)
