@@ -4,11 +4,7 @@ from models.diet import Diet
 from database import db
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 import bcrypt
-# from timezone import AdjustTimezone
-import zoneinfo
-import pytz
-from pytz import timezone, UnknownTimeZoneError
-from datetime import datetime
+from timezone import AdjustTimezone
 
 # Configuração para iniciar FLask
 app = Flask(__name__)
@@ -26,11 +22,6 @@ login_manager.init_app(app)
 
 #view login
 login_manager.login_view = 'login'
-
-def AdjustTimezone(date):
-    sao_paulo_timezone = pytz.timezone('America/Sao_Paulo')
-
-    return date.astimezone(sao_paulo_timezone).strftime('%Y-%m-%d %H:%M:%S')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -173,6 +164,34 @@ def list_diet(id_user):
     else:
         return jsonify({"message": "Usuário não encontrado"}), 404
 
+@app.route('/user/<int:id_user>/diet/change/<int:id_diet>', methods=["PUT"])
+@login_required
+def change_diet(id_user, id_diet):
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
+    date = data.get('date')
+    diet = data.get('diet')
+
+    if id_user == current_user.id or current_user.role == 'admin':
+        edit_diet = db.session.query(Diet).filter(Diet.id == id_diet).first()
+        if name:
+            edit_diet.name = name
+        
+        if description:
+            edit_diet.description = description
+        
+        if date:
+            edit_diet.date = date
+        
+        if diet:
+            edit_diet.diet = diet
+            
+        db.session.commit()
+        return jsonify({"message": f"Nome da refeição {edit_diet.name} alterada com sucesso"})
+
+    return jsonify({"message": "Operação inválida"}), 404
+    
 
 # Start Flask Server
 if __name__ == '__main__':
