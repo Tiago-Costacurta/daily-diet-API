@@ -214,7 +214,19 @@ def change_diet(id_user, id_diet):
 
     return jsonify({"message": "Operação inválida"}), 404
     
+@app.route('/user/<int:id_user>/diet/delete', methods=["DELETE"])
+@login_required
+def delete_diet(id_user):
+    data = request.json
+    id_diet = data.get("id_diet")
+    diet = Diet.query.get(id_diet)
 
+    if id_user == current_user.id or current_user.role == 'admin':
+        db.session.delete(diet)
+        db.session.commit()
+        return jsonify({"message": "Dieta deletada com sucesso"})
+
+    return jsonify({"message": "Dieta não encontrada"})
 
 # Start Flask Server
 if __name__ == '__main__':
