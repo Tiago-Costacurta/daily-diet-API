@@ -136,9 +136,10 @@ def create_diet(id_user):
         return jsonify({"message": "Dados Incorretos"}), 400
     return jsonify({"message": "Operação não permitida"})
 
+# Listagem de dietas conforme o ID do usuário
 @app.route('/user/<int:id_user>/diet/list', methods=["GET"])
 @login_required
-def list_diet(id_user):
+def list_all_diet(id_user):
     user = User.query.get(id_user)
 
     if id_user != current_user.id and current_user.role == "user":
@@ -164,6 +165,27 @@ def list_diet(id_user):
     else:
         return jsonify({"message": "Usuário não encontrado"}), 404
 
+# Listar uma única dieta
+@app.route('/user/<int:id_user>/diet/<int:id_diet>', methods=["GET"])
+@login_required
+def list_diet(id_user, id_diet):
+    if id_user == current_user.id or current_user.role == 'admin':
+        list_diet = db.session.query(Diet).filter(Diet.id == id_diet).first()
+        
+        diet_data = {
+                "id": list_diet.id,
+                "name": list_diet.name,
+                "description": list_diet.description,
+                "date": list_diet.date,
+                "diet": list_diet.diet
+            }
+
+        return jsonify(diet_data)
+
+    return jsonify({"message": "Operação inválida"}), 404
+
+
+# Alteração de dados da dieta
 @app.route('/user/<int:id_user>/diet/change/<int:id_diet>', methods=["PUT"])
 @login_required
 def change_diet(id_user, id_diet):
@@ -192,6 +214,7 @@ def change_diet(id_user, id_diet):
 
     return jsonify({"message": "Operação inválida"}), 404
     
+
 
 # Start Flask Server
 if __name__ == '__main__':
