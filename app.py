@@ -136,6 +136,33 @@ def create_diet(id_user):
     return jsonify({"message": "Operação não permitida"})
 
 
+@app.route('/user/<int:id_user>/diet/list', methods=["GET"])
+@login_required
+def list_diet(id_user):
+    user = User.query.get(id_user)
+
+    if id_user != current_user.id and current_user.role == "user":
+        return jsonify({"message": "Operação não permitida"}), 403
+    
+    if user:
+        list_diet = db.session.query(Diet).filter(Diet.userid == id_user).all()
+        diets_data = []
+
+        for diet in list_diet:
+            diet_data = {
+                "id": diet.id,
+                "name": diet.name,
+                "description": diet.description,
+                "date": str(diet.date),
+                "diet": diet.diet
+            }
+            diets_data.append(diet_data)
+
+        return jsonify(diets_data)
+    else:
+        return jsonify({"message": "Usuário não encontrado"}), 404
+
+
 # Start Flask Server
 if __name__ == '__main__':
     app.run(debug=True)
