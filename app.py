@@ -214,6 +214,7 @@ def change_diet(id_user, id_diet):
 
     return jsonify({"message": "Operação inválida"}), 404
     
+# Deletar refeições
 @app.route('/user/<int:id_user>/diet/delete', methods=["DELETE"])
 @login_required
 def delete_diet(id_user):
